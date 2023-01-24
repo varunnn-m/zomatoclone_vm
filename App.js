@@ -1,56 +1,14 @@
-import React from 'react';
-import {
-
-
-  StyleSheet,
-  Text,
-  View,
-  Image
-} from 'react-native';
-import { THEME_COLOR } from "./src/strings"
-import {
-  responsiveHeight,
-  responsiveWidth,
-  responsiveFontSize
-} from "react-native-responsive-dimensions";
-
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+import AppNavigator from './src/AppNavigator'
 
 
 const App = () => {
-
-
   return (
+<AppNavigator/>
+  )
+}
 
-    <View style={styles.container}>
-      <Image
-      source={require('./src/images/logo.png')}
-      style={styles.logo}
-      resizeMode="contain"
-      >
+export default App
 
-      </Image>
-    </View>
-
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: THEME_COLOR
-
-  },
-  logo:{
-    width:responsiveWidth(34) ,
-    height:responsiveHeight(17)
-  }
-
-
-});
-
-export default App;
-
-
-//  code ends
+const styles = StyleSheet.create({})
