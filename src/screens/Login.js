@@ -9,11 +9,14 @@ const Login = () => {
 
     const[mobileNum,setMobileNum]=useState('')
 
-    async function signInWithPhoneNumber() {
+    const signInWithPhoneNumber=async ()=> {
         const confirmation = await auth().signInWithPhoneNumber("+91"+mobileNum);
         //setConfirm(confirmation);
         console.log(confirmation)
+        console.log(mobileNum)
+        
     }
+    
 
     return (
         <View style={styles.container}>
@@ -30,7 +33,7 @@ const Login = () => {
                 </View>
             </View>
             <TextInput placeholder='mobile number' keyboardType='number-pad' style={styles.mobileInput} onChangeText={setMobileNum} />
-            <TouchableOpacity style={styles.login} onPress={()=>signInWithPhoneNumber}>
+            <TouchableOpacity style={styles.login} onPress={signInWithPhoneNumber}>
                 <Text style={{ fontWeight: "500", color: "white" }}>Login with OTP</Text>
             </TouchableOpacity>
         </View>
