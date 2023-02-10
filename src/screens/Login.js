@@ -1,4 +1,4 @@
-import { StatusBar, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+import { StatusBar, StyleSheet, Text, View, Image, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native'
 import React, { useState } from 'react'
 import { LOGIN_TITLE, THEME_COLOR } from "../strings.js"
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions'
@@ -22,9 +22,19 @@ const Login = () => {
 
     }
 
+    const verifyOtp = async ()=>{
+        try {
+            const res=await confirm.confirm(otp);
+            console.log("Verification successful: ",res)
+          } catch (error) {
+            console.log('Invalid code.');
+          }
+    }
+
 
     return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView style={styles.container} behavior="position">
+        <View>
             <StatusBar backgroundColor={THEME_COLOR + "99"} translucent={false} barStyle="light-content" />
             <View style={styles.containerIn}>
                 <Image source={require('../images/BannerRed.png')} style={styles.banner} />
@@ -32,7 +42,7 @@ const Login = () => {
             <Text style={styles.loginTitle}>{LOGIN_TITLE}</Text>
 
             {
-                confirm!== null ?
+                confirm== null ?
                     <View>
                         <View style={styles.divider}>
                             <View style={[styles.dividerView, { marginLeft: 20 }]}>
@@ -71,7 +81,7 @@ const Login = () => {
                             })}
 
                         />
-                        <TouchableOpacity style={[styles.login,{backgroundColor:codeInput.length<6?"grey":THEME_COLOR}]} onPress={signInWithPhoneNumber} disabled={codeInput.length<6}>
+                        <TouchableOpacity style={[styles.login,{backgroundColor:codeInput.length<6?"grey":THEME_COLOR}]} onPress={verifyOtp} disabled={codeInput.length<6}>
                             <Text style={{ fontWeight: "500", color: "white" }}>Verify OTP</Text>
                         </TouchableOpacity>
 
@@ -80,6 +90,7 @@ const Login = () => {
                     </View>
             }
         </View>
+        </KeyboardAvoidingView>
     )
 }
 
@@ -151,7 +162,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor:"#00000099",
         borderRadius:10,
-        backgroundColor:"white"
+        backgroundColor:"white",
+        color:"black"
       },
     
       underlineStyleHighLighted: {
