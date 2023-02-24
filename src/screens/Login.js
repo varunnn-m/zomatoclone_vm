@@ -5,29 +5,42 @@ import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-nat
 import { TextInput } from 'react-native-gesture-handler'
 import auth from '@react-native-firebase/auth';
 import OTPInputView from '@twotalltotems/react-native-otp-input'
-import { set } from 'immer/dist/internal.js'
+import { useNavigation } from '@react-navigation/native'
+import { useDispatch } from 'react-redux'
+import { setMobileNum, setIsLoggedIn } from '../redux/globalSlice.js'
+
 
 const Login = () => {
+
+    const dispatch=useDispatch()
+
+    const navigation=useNavigation()
 
     const [mobileNum, setMobileNum] = useState('')
     const [confirm, setConfirm] = useState(null)
     const [otp,setOtp]=useState("")
     const [codeInput,setCodeInput]=useState("")
+    const [modalVisible, setModalVisible]=useState(false)
 
     const signInWithPhoneNumber = async () => {
         const confirmation = await auth().signInWithPhoneNumber("+91" + mobileNum);
         setConfirm(confirmation);
-        console.log(confirmation)
-        console.log(mobileNum)
+        // console.log(confirmation)
+        // console.log(mobileNum)
+        console.log("Please enter OTP")
+        //setModalVisible(true)
 
     }
 
     const verifyOtp = async ()=>{
         try {
             const res=await confirm.confirm(otp);
-            console.log("Verification successful: ",res)
+            console.log("Verification successful: ",res.user.phoneNumber)
+            dispatch(setMobileNum(mobileNum))
+            dispatch(setIsLoggedIn(true))
+            navigation.navigate("Home")
           } catch (error) {
-            console.log('Invalid code.');
+            console.log('Invalid code.', error);
           }
     }
 
@@ -89,6 +102,12 @@ const Login = () => {
 
                     </View>
             }
+            {/* <Modal isVisible={modalVisible}>
+                <View>
+                    <Text>This is modal</Text>
+                </View>
+
+            </Modal> */}
         </View>
         </KeyboardAvoidingView>
     )
