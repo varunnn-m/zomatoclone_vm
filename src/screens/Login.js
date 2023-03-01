@@ -16,14 +16,14 @@ const Login = () => {
 
     const navigation=useNavigation()
 
-    const [mobileNum, setMobileNum] = useState('')
+    const [mobileNumber, setMobileNumber] = useState('')
     const [confirm, setConfirm] = useState(null)
     const [otp,setOtp]=useState("")
     const [codeInput,setCodeInput]=useState("")
     const [modalVisible, setModalVisible]=useState(false)
 
     const signInWithPhoneNumber = async () => {
-        const confirmation = await auth().signInWithPhoneNumber("+91" + mobileNum);
+        const confirmation = await auth().signInWithPhoneNumber("+91" + mobileNumber);
         setConfirm(confirmation);
         // console.log(confirmation)
         // console.log(mobileNum)
@@ -36,11 +36,11 @@ const Login = () => {
         try {
             const res=await confirm.confirm(otp);
             console.log("Verification successful: ",res.user.phoneNumber)
-            dispatch(setMobileNum(mobileNum))
+            dispatch(setMobileNum(mobileNumber))
             dispatch(setIsLoggedIn(true))
             navigation.navigate("Home")
           } catch (error) {
-            console.log('Invalid code.', error);
+            console.log( error);
           }
     }
 
@@ -64,8 +64,8 @@ const Login = () => {
                             <View style={[styles.dividerView, { marginRight: 20 }]}>
                             </View>
                         </View>
-                        <TextInput placeholder='mobile number' keyboardType='number-pad' style={styles.mobileInput} onChangeText={setMobileNum} />
-                        <TouchableOpacity style={[styles.login,{backgroundColor:mobileNum.length!==10?"grey":THEME_COLOR}]} onPress={signInWithPhoneNumber}>
+                        <TextInput placeholder='mobile number' keyboardType='number-pad' style={styles.mobileInput} onChangeText={setMobileNumber} />
+                        <TouchableOpacity style={[styles.login,{backgroundColor:mobileNumber.length!==10?"grey":THEME_COLOR}]} onPress={signInWithPhoneNumber}>
                             <Text style={{ fontWeight: "500", color: "white" }}>Login with OTP</Text>
                         </TouchableOpacity>
                     </View>

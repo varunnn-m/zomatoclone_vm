@@ -1,16 +1,24 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+
+import {store} from "../redux/store"
 import { useSelector } from 'react-redux'
-import { selectMobileNum, selectIsLoggedIn } from '../redux/globalSlice'
 
 const Home = () => {
 
-    const isLoggedIn=useSelector(selectIsLoggedIn)
-    const mobileNum=useSelector(selectMobileNum)
+    
+
+    const selector=useSelector(state=>state.global)
+
+    // const isLoggedIn=selector.isLoggedIn
+    // const mobileNum=selector.mobileNum
+    console.log("thisSelector: ",selector)
+
+    const {mobileNum, isLoggedIn}=selector
   return (
     <View>
       <Text>Home</Text>
-      <Text>{`Welcome ${mobileNum} , your log in status is ${isLoggedIn}`}</Text>
+      <Text>{`Welcome ${mobileNum} , your log in status is ${isLoggedIn} `}</Text>
     </View>
   )
 }
